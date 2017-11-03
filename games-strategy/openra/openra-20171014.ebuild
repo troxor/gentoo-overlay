@@ -15,7 +15,7 @@ SRC_URI="https://github.com/OpenRA/OpenRA/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+debug doc -nuget +xdg +zenity"
+IUSE="+debug -nuget +xdg +zenity"
 RESTRICT="mirror"
 
 RDEPEND="dev-dotnet/libgdiplus
@@ -30,10 +30,7 @@ RDEPEND="dev-dotnet/libgdiplus
 	zenity? ( gnome-extra/zenity )"
 DEPEND="${RDEPEND}
 	nuget? ( dev-dotnet/nuget )
-	doc? ( || ( app-text/discount
-		app-text/peg-markdown
-		dev-python/markdown
-		dev-perl/Text-Markdown ) )"
+"
 
 pkg_setup() {
 	mono-env_pkg_setup
@@ -52,7 +49,7 @@ src_prepare() {
 
 src_compile() {
 	emake $(usex debug "" "DEBUG=false")
-	emake VERSION=${MY_PV} docs man-page
+	emake VERSION=${MY_PV}
 }
 
 src_install()
@@ -84,20 +81,6 @@ src_install()
 	insinto /etc/xdg/menus/applications-merged
 	doins "${FILESDIR}"/games-${PN}.menu
 
-	# docs
-	dodoc "${FILESDIR}"/README.gentoo
-	if [[ -n "$(type -P markdown)" ]] ; then
-		local file; for file in {README,CONTRIBUTING,DOCUMENTATION,Lua-API}; do \
-		markdown ${file}.md > ${file}.html && dohtml ${file}.html || die; done
-	elif [[ -n "$(type -P markdown_py)" ]] ; then
-		local file; for file in {README,CONTRIBUTING,DOCUMENTATION,Lua-API}; do \
-		markdown_py ${file}.md > ${file}.html && dohtml ${file}.html || die; done
-	elif [[ -n "$(type -P Markdown.pl)" ]] ; then
-		local file; for file in {README,CONTRIBUTING,DOCUMENTATION,Lua-API}; do \
-		Markdown.pl ${file}.md > ${file}.html && dohtml ${file}.html || die; done
-	else
-		dodoc {README,CONTRIBUTING,DOCUMENTATION,Lua-API}.md
-	fi
 }
 
 pkg_preinst() {
