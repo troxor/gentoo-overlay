@@ -25,13 +25,3 @@ RESTRICT="test"
 DOCS="AUTHORS AUTHORS.libfswatch ChangeLog CONTRIBUTING.md COPYING INSTALL NEWS README README.linux"
 
 
-src_prepare() {
-
-	eautoreconf
-}
-
-
-src_install() {
-	default
-}
-
