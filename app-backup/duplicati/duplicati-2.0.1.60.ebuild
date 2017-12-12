@@ -16,7 +16,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="amd64"
 
 CDEPEND="dev-dotnet/gtk-sharp"
 	#dev-dotnet/nuget" - 4.1.0
