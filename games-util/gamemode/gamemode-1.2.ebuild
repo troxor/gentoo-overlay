@@ -49,3 +49,7 @@ multilib_src_compile() {
 multilib_src_install() {
 	DESTDIR="${D}" eninja install
 }
+
+pkg_postinst() {
+	einfo "You should run systemctl --user daemon-reload"
+}
