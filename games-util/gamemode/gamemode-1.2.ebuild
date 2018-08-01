@@ -33,7 +33,7 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		-D with-systemd=$(usex systemd true false)
-		-D with-systemd-user-unit-dir=$(usex systemd /etc/systemd/user)
+		-D with-systemd-user-unit-dir=$(pkg-config  --variable=systemduserunitdir systemd)
 		-D with-dbus-service-dir=$(usex systemd false true)
 		-D with-examples=$(usex examples true false)
 		-D with-daemon=true
